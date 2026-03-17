@@ -39,6 +39,7 @@ import {
 } from '@alephium/web3'
 import { PrivateKeyWallet } from '@alephium/web3-wallet'
 import { SignClientTypes } from '@walletconnect/types'
+import { CoreTypes } from '@walletconnect/types'
 import { Greeter, Main } from '../artifacts/ts'
 import { sleep } from '@alephium/web3'
 import { randomBytes, randomInt } from 'crypto'
@@ -101,7 +102,7 @@ const TEST_PROVIDER_OPTS: ProviderOptions = {
     return
   },
 
-  metadata: TEST_APP_METADATA,
+  ...({ metadata: TEST_APP_METADATA } as any),
   logger: 'error',
   relayUrl: TEST_RELAY_URL
 }

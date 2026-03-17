@@ -1,11 +1,20 @@
 {
   "testSequencer": "<rootDir>/configs/testSequencer.js",
-  "testPathIgnorePatterns": [".*/node_modules/", ".*/templates/.*"],
-  "transform": {
-    "^.+\\.(t|j)sx?$": "ts-jest"
-  },
-  "testMatch": ["**/(src|test)/**/*.test.ts"],
-  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+  "testPathIgnorePatterns": [
+    ".*/node_modules/",
+    ".*/templates/.*"
+  ],
+  "testMatch": [
+    "**/(src|test)/**/*.test.ts"
+  ],
+  "moduleFileExtensions": [
+    "ts",
+    "tsx",
+    "js",
+    "jsx",
+    "json",
+    "node"
+  ],
   "collectCoverage": true,
   "coverageDirectory": "./coverage/",
   "collectCoverageFrom": [
@@ -14,5 +23,45 @@
   ],
   "moduleDirectories": [
     "node_modules"
-  ]
+  ],
+  "transformIgnorePatterns": [
+    "node_modules/(?!(@noble/hashes|@noble/ciphers|@noble/secp256k1|bip32|@walletconnect)/)"
+  ],
+  "transform": {
+    "^.+\\.(t|j)sx?$": [
+      "ts-jest",
+      {
+        "useESM": true
+      }
+    ],
+    "^.+\\.js$": [
+      "babel-jest",
+      {
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ]
+      }
+    ],
+    "node_modules/@noble/.+\\.js$": [
+      "ts-jest",
+      {
+        "useESM": true
+      }
+    ]
+  },
+  "moduleNameMapper": {
+    "^@noble/hashes/(.*)$": "<rootDir>/node_modules/@noble/hashes/$1",
+    "^@noble/ciphers/(.*)$": "<rootDir>/node_modules/@noble/ciphers/$1",
+    "^@walletconnect/types$": "<rootDir>/node_modules/@walletconnect/types",
+    "^@alephium/web3$": "<rootDir>/packages/web3/src/index.ts",
+    "^@alephium/web3-wallet$": "<rootDir>/packages/web3-wallet/src/index.ts",
+    "^@alephium/web3-test$": "<rootDir>/packages/web3-test/src/index.ts"
+  }
 }
