@@ -87,10 +87,12 @@ import {
   AutoFund,
   TupleTest
 } from '../artifacts/ts'
+import { randomInt } from '@alephium/web3-test'
 import { randomBytes } from '@noble/hashes/utils'
 import { TokenBalance } from '../artifacts/ts/types'
 import { ProjectArtifact, Project } from '../packages/cli/src/project'
 import { A, Addresses, B, ByteVecs, AssertError, Numbers, ConstantTrue, ConstantFalse } from '../artifacts/ts/constants'
+import { binToHex } from '../packages/web3/src/utils'
 
 describe('contract', function () {
   let signer: PrivateKeyWallet
@@ -383,7 +385,7 @@ describe('contract', function () {
     expect(getContractByCodeHash(NFTTest.contract.codeHash).bytecode).toEqual(NFTTest.contract.bytecode)
     expect(getContractByCodeHash(TokenTest.contract.codeHash).bytecode).toEqual(TokenTest.contract.bytecode)
 
-    const invalidCodeHash = Buffer.from(randomBytes(32)).toString('hex')
+    const invalidCodeHash = binToHex(randomBytes(32))
     expect(() => getContractByCodeHash(invalidCodeHash)).toThrow(`Unknown code with code hash: ${invalidCodeHash}`)
   })
 
@@ -1003,7 +1005,7 @@ describe('contract', function () {
   })
 
   it('should call tx script with the correct group index', async () => {
-    const targetGroup = Math.floor(Math.random() * TOTAL_NUMBER_OF_GROUPS)
+    const targetGroup = randomInt(0, TOTAL_NUMBER_OF_GROUPS)
     const signer = await getSigner(undefined, targetGroup, 'gl-secp256k1')
 
     for (let group = 0; group < TOTAL_NUMBER_OF_GROUPS; group += 1) {
@@ -1064,7 +1066,7 @@ describe('contract', function () {
     expect(result.contractInstance.groupIndex).toEqual(0)
     const mapTest = result.contractInstance
 
-    const group = Math.floor(Math.random() * (TOTAL_NUMBER_OF_GROUPS - 1)) + 1
+    const group = randomInt(1, TOTAL_NUMBER_OF_GROUPS)
     const grouplessSigner = await getSigner(ONE_ALPH * 10n, group, 'gl-secp256k1')
     expect(groupOfAddress(grouplessSigner.account.address)).not.toEqual(0)
 

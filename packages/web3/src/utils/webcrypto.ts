@@ -19,8 +19,6 @@ along with the library. If not, see <http://www.gnu.org/licenses/>.
 import { randomBytes } from '@noble/hashes/utils'
 
 export class WebCrypto {
-  subtle = typeof globalThis.crypto !== 'undefined' ? globalThis.crypto.subtle : undefined
-
   public getRandomValues<T extends ArrayBufferView | null>(array: T): T {
     if (!ArrayBuffer.isView(array)) {
       throw new TypeError(

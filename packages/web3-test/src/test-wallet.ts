@@ -155,3 +155,7 @@ export function randomContractId(groupIndex = 0): string {
 export function randomContractAddress(groupIndex = 0): string {
   return addressFromContractId(randomContractId(groupIndex))
 }
+
+export function randomInt(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min)) + min
+}
