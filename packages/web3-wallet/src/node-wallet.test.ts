@@ -17,7 +17,7 @@ along with the library. If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { SignTransferTxResult, web3 } from '@alephium/web3'
-import { randomBytes } from 'crypto'
+import { randomBytes } from '@noble/hashes/utils'
 import { NodeWallet } from './node-wallet'
 import { testNodeWallet } from '@alephium/web3-test'
 
@@ -57,7 +57,7 @@ describe('node wallet', () => {
   it('should change selected address', async () => {
     const provider = web3.getCurrentNodeProvider()
 
-    const walletName = randomBytes(32).toString('hex')
+    const walletName = Buffer.from(randomBytes(32)).toString('hex')
     await provider.wallets.postWallets({ walletName: walletName, password: 'test', isMiner: true })
 
     const nodeWallet = new NodeWallet(walletName)

@@ -41,7 +41,7 @@ import { PrivateKeyWallet } from '@alephium/web3-wallet'
 import { SignClientTypes } from '@walletconnect/types'
 import { Greeter, Main } from '../artifacts/ts'
 import { sleep } from '@alephium/web3'
-import { randomBytes, randomInt } from 'crypto'
+import { randomBytes } from '@noble/hashes/utils'
 
 const NETWORK_ID = 'devnet'
 const ADDRESS_GROUP = 0
@@ -145,7 +145,7 @@ describe('Unit tests', function () {
 
   it('test formatAccount & parseAccount', () => {
     const publicKey0 = binToHex(randomBytes(33))
-    const keyType0 = groupedKeyTypes[randomInt(0, groupedKeyTypes.length)]
+    const keyType0 = groupedKeyTypes[Math.floor(Math.random() * groupedKeyTypes.length)]
     const address0 = addressFromPublicKey(publicKey0, keyType0)
     const groupIndex = groupOfAddress(address0)
     const account0: Account = {
@@ -161,7 +161,7 @@ describe('Unit tests', function () {
       networkId: 'devnet'
     })
 
-    const keyType1 = grouplessKeyTypes[randomInt(0, grouplessKeyTypes.length)]
+    const keyType1 = grouplessKeyTypes[Math.floor(Math.random() * grouplessKeyTypes.length)]
     const publicKey1 = keyType1 === 'gl-ed25519' ? binToHex(randomBytes(32)) : publicKey0
     const address1 = addressFromPublicKey(publicKey1, keyType1)
     const account1: Account = {

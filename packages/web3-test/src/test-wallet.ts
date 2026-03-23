@@ -32,7 +32,7 @@ import {
   KeyType
 } from '@alephium/web3'
 import { NodeWallet, PrivateKeyWallet } from '@alephium/web3-wallet'
-import { randomBytes } from 'crypto'
+import { randomBytes } from '@noble/hashes/utils'
 import {
   testAddress,
   testMnemonic,

@@ -18,7 +18,7 @@ along with the library. If not, see <http://www.gnu.org/licenses/>.
 
 import { binToHex } from '../utils'
 import { i256Codec, i32Codec, Signed, u256Codec, u32Codec, UnSigned } from './compact-int-codec'
-import { randomBytes } from 'crypto'
+import { randomBytes } from '@noble/hashes/utils'
 
 describe('Encode & decode compact int', function () {
   function randomU32() {

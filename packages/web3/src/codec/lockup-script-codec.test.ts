@@ -15,7 +15,7 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with the library. If not, see <http://www.gnu.org/licenses/>.
 */
-import { randomBytes } from 'crypto'
+import { randomBytes } from '@noble/hashes/utils'
 import { LockupScript, lockupScriptCodec, P2HMPK, P2PK, safeP2HMPKHashCodec } from './lockup-script-codec'
 import { byteCodec } from './codec'
 import { PublicKeyLike, safePublicKeyLikeCodec } from './public-key-like-codec'

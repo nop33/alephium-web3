@@ -15,7 +15,7 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with the library. If not, see <http://www.gnu.org/licenses/>.
 */
-import { randomBytes } from 'crypto'
+import { randomBytes } from '@noble/hashes/utils'
 import { timestampCodec } from './timestamp-codec'
 import { binToHex } from '../utils'
 

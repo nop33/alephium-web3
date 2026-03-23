@@ -16,12 +16,10 @@ You should have received a copy of the GNU Lesser General Public License
 along with the library. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { webcrypto, randomFillSync } from 'crypto'
-
-const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined'
+import { randomBytes } from '@noble/hashes/utils'
 
 export class WebCrypto {
-  subtle = isBrowser ? globalThis.crypto.subtle : webcrypto ? webcrypto.subtle : crypto.subtle
+  subtle = typeof globalThis.crypto !== 'undefined' ? globalThis.crypto.subtle : undefined
 
   public getRandomValues<T extends ArrayBufferView | null>(array: T): T {
     if (!ArrayBuffer.isView(array)) {
@@ -29,13 +27,9 @@ export class WebCrypto {
         "Failed to execute 'getRandomValues' on 'Crypto': parameter 1 is not of type 'ArrayBufferView'"
       )
     }
-    const bytes = new Uint8Array(array.buffer, array.byteOffset, array.byteLength)
-
-    if (isBrowser) {
-      globalThis.crypto.getRandomValues(bytes)
-    } else {
-      randomFillSync(bytes)
-    }
+    const bytes = randomBytes(array.byteLength)
+    const view = new Uint8Array(array.buffer, array.byteOffset, array.byteLength)
+    view.set(bytes)
     return array
   }
 }

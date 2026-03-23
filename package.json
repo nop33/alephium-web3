@@ -5,7 +5,9 @@
     "@alephium/cli": "workspace:*",
     "@alephium/web3": "workspace:*",
     "@alephium/web3-test": "workspace:*",
-    "@alephium/web3-wallet": "workspace:*"
+    "@alephium/web3-wallet": "workspace:*",
+    "@noble/ciphers": "^0.6.0",
+    "@noble/hashes": "^1.8.0"
   },
   "devDependencies": {
     "@swc/core": "^1.4.1",

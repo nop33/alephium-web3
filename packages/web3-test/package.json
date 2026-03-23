@@ -29,7 +29,9 @@
   "type": "commonjs",
   "dependencies": {
     "@alephium/web3": "workspace:^",
-    "@alephium/web3-wallet": "workspace:^"
+    "@alephium/web3-wallet": "workspace:^",
+    "@noble/ciphers": "^0.4.1",
+    "@noble/hashes": "^1.3.3"
   },
   "devDependencies": {
     "@types/find-up": "^2.1.1",

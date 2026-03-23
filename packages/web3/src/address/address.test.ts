@@ -39,7 +39,7 @@ import {
   addressWithoutExplicitGroupIndex
 } from './address'
 import { binToHex } from '../utils'
-import { randomBytes } from 'crypto'
+import { randomBytes } from '@noble/hashes/utils'
 import { LockupScript, lockupScriptCodec } from '../codec/lockup-script-codec'
 import { PublicKeyLike } from '../codec/public-key-like-codec'
 
