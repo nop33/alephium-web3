@@ -99,12 +99,10 @@ export class SourceInfo {
     contractRelativePath: string,
     isExternal: boolean
   ): Promise<SourceInfo> {
-    const cryptoSubtle = crypto.subtle
-    if (!cryptoSubtle) {
-      throw new Error('crypto.subtle is not available')
-    }
-    const sourceCodeHash = await cryptoSubtle.digest('SHA-256', Buffer.from(sourceCode))
-    const sourceCodeHashHex = Buffer.from(sourceCodeHash).toString('hex')
+    const { sha256 } = await import('@noble/hashes/sha256')
+    const hash = sha256.create()
+    hash.update(Buffer.from(sourceCode))
+    const sourceCodeHashHex = Buffer.from(hash.digest()).toString('hex')
     return new SourceInfo(type, name, fromIndex, sourceCode, sourceCodeHashHex, contractRelativePath, isExternal)
   }
 }
