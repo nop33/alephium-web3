@@ -57,11 +57,11 @@
     ]
   },
   "moduleNameMapper": {
-    "^@noble/hashes/(.*)$": "<rootDir>/node_modules/@noble/hashes/$1",
-    "^@noble/ciphers/(.*)$": "<rootDir>/node_modules/@noble/ciphers/$1",
     "^@walletconnect/types$": "<rootDir>/node_modules/@walletconnect/types",
     "^@alephium/web3$": "<rootDir>/packages/web3/src/index.ts",
     "^@alephium/web3-wallet$": "<rootDir>/packages/web3-wallet/src/index.ts",
-    "^@alephium/web3-test$": "<rootDir>/packages/web3-test/src/index.ts"
+    "^@alephium/web3-test$": "<rootDir>/packages/web3-test/src/index.ts",
+    "^@noble/hashes/(.*)$": "<rootDir>/node_modules/@noble/hashes/$1.js",
+    "^@noble/ciphers/(.*)$": "<rootDir>/node_modules/@noble/ciphers/$1.js"
   }
 }
