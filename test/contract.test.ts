@@ -87,7 +87,8 @@ import {
   AutoFund,
   TupleTest
 } from '../artifacts/ts'
-import { randomBytes, randomInt } from 'crypto'
+import { randomInt } from '@alephium/web3-test'
+import { randomBytes } from '@noble/hashes/utils'
 import { TokenBalance } from '../artifacts/ts/types'
 import { ProjectArtifact, Project } from '../packages/cli/src/project'
 import { A, Addresses, B, ByteVecs, AssertError, Numbers, ConstantTrue, ConstantFalse } from '../artifacts/ts/constants'
@@ -383,7 +384,7 @@ describe('contract', function () {
     expect(getContractByCodeHash(NFTTest.contract.codeHash).bytecode).toEqual(NFTTest.contract.bytecode)
     expect(getContractByCodeHash(TokenTest.contract.codeHash).bytecode).toEqual(TokenTest.contract.bytecode)
 
-    const invalidCodeHash = randomBytes(32).toString('hex')
+    const invalidCodeHash = binToHex(randomBytes(32))
     expect(() => getContractByCodeHash(invalidCodeHash)).toThrow(`Unknown code with code hash: ${invalidCodeHash}`)
   })
 

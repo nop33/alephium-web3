@@ -32,7 +32,7 @@ import {
   KeyType
 } from '@alephium/web3'
 import { NodeWallet, PrivateKeyWallet } from '@alephium/web3-wallet'
-import { randomBytes } from 'crypto'
+import { randomBytes } from '@noble/hashes/utils'
 import {
   testAddress,
   testMnemonic,
@@ -154,4 +154,8 @@ export function randomContractId(groupIndex = 0): string {
 
 export function randomContractAddress(groupIndex = 0): string {
   return addressFromContractId(randomContractId(groupIndex))
+}
+
+export function randomInt(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min)) + min
 }

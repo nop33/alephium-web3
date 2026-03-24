@@ -36,6 +36,8 @@
   "type": "commonjs",
   "dependencies": {
     "@alephium/web3": "workspace:^",
+    "@noble/ciphers": "^0.4.1",
+    "@noble/hashes": "^1.3.3",
     "@noble/secp256k1": "1.7.1",
     "@types/node": "^16.18.23",
     "bip32": "3.1.0",

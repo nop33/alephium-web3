@@ -22,16 +22,17 @@ along with the library. If not, see <http://www.gnu.org/licenses/>.
 
 import * as necc from '@noble/secp256k1'
 import { BIP32API, BIP32Factory, BIP32Interface } from 'bip32'
-import { createHash, createHmac } from 'crypto'
+import { sha256 } from '@noble/hashes/sha256'
+import { hmac } from '@noble/hashes/hmac'
 
 necc.utils.sha256Sync = (...messages: Uint8Array[]): Uint8Array => {
-  const sha256 = createHash('sha256')
-  for (const message of messages) sha256.update(message)
-  return sha256.digest()
+  const hash = sha256.create()
+  for (const message of messages) hash.update(message)
+  return hash.digest()
 }
 
 necc.utils.hmacSha256Sync = (key: Uint8Array, ...messages: Uint8Array[]): Uint8Array => {
-  const hash = createHmac('sha256', key)
+  const hash = hmac.create(sha256, key)
   messages.forEach((m) => hash.update(m))
   return Uint8Array.from(hash.digest())
 }

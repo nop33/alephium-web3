@@ -41,7 +41,8 @@ import { PrivateKeyWallet } from '@alephium/web3-wallet'
 import { SignClientTypes } from '@walletconnect/types'
 import { Greeter, Main } from '../artifacts/ts'
 import { sleep } from '@alephium/web3'
-import { randomBytes, randomInt } from 'crypto'
+import { randomInt } from '@alephium/web3-test'
+import { randomBytes } from '@noble/hashes/utils'
 
 const NETWORK_ID = 'devnet'
 const ADDRESS_GROUP = 0

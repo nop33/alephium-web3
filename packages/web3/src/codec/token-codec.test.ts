@@ -18,14 +18,14 @@ along with the library. If not, see <http://www.gnu.org/licenses/>.
 
 import { tokenCodec } from './token-codec'
 import { randomContractId } from '@alephium/web3-test'
-import { randomBytes } from 'crypto'
+import { randomBytes } from '@noble/hashes/utils'
 import { hexToBinUnsafe } from '../utils'
 
 describe('Encode & decode tokens', function () {
   it('should encode & decode tokens', function () {
     for (let i = 0; i < 100; i++) {
       const tokenId = randomContractId()
-      const amount = BigInt('0x' + randomBytes(31).toString('hex'))
+      const amount = BigInt('0x' + Buffer.from(randomBytes(31)).toString('hex'))
 
       const token = {
         tokenId: hexToBinUnsafe(tokenId),

@@ -18,10 +18,10 @@ along with the library. If not, see <http://www.gnu.org/licenses/>.
 
 import { getGroupFromTxScript, updateBytecodeWithGroup } from './tx-builder'
 import { DestroyAdd } from '../../../../artifacts/ts/scripts'
-import { randomBytes } from 'crypto'
 import { binToHex } from '../utils'
 import { TOTAL_NUMBER_OF_GROUPS } from '../constants'
 import { groupOfAddress } from '../address'
+import { randomBytes } from '@noble/hashes/utils'
 
 describe('tx-builder', () => {
   function randomContractId(groupIndex: number): string {

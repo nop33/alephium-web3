@@ -17,13 +17,13 @@ along with the library. If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { BigIntCodec } from './bigint-codec'
-import { randomBytes } from 'crypto'
+import { randomBytes } from '@noble/hashes/utils'
 
 describe('Encode & decode bigint', function () {
   it('should encode and decode bigint', function () {
     for (let i = 0; i < 1000; i++) {
       const isNegative = i % 2 === 0
-      const n = BigInt('0x' + randomBytes(100).toString('hex')) * (isNegative ? -1n : 1n)
+      const n = BigInt('0x' + Buffer.from(randomBytes(100)).toString('hex')) * (isNegative ? -1n : 1n)
       const encoded = BigIntCodec.encode(n)
       const decoded = isNegative ? BigIntCodec.decodeSigned(encoded) : BigIntCodec.decodeUnsigned(encoded)
       expect(n).toEqual(decoded)
