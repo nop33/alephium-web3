@@ -92,7 +92,6 @@ import { randomBytes } from '@noble/hashes/utils'
 import { TokenBalance } from '../artifacts/ts/types'
 import { ProjectArtifact, Project } from '../packages/cli/src/project'
 import { A, Addresses, B, ByteVecs, AssertError, Numbers, ConstantTrue, ConstantFalse } from '../artifacts/ts/constants'
-import { binToHex } from '../packages/web3/src/utils'
 
 describe('contract', function () {
   let signer: PrivateKeyWallet
