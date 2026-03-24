@@ -44,11 +44,13 @@ describe('deployments', () => {
     deployments.add(deploymentsPerAddress0)
     expect(deployments.isEmpty()).toEqual(true)
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     deploymentsPerAddress0.contracts.set('Foo', undefined as any)
     expect(deploymentsPerAddress0.isEmpty()).toEqual(false)
     expect(deployments.isEmpty()).toEqual(false)
 
     deploymentsPerAddress0.contracts.clear()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     deploymentsPerAddress0.scripts.set('Foo', undefined as any)
     expect(deploymentsPerAddress0.isEmpty()).toEqual(false)
     expect(deployments.isEmpty()).toEqual(false)
@@ -108,7 +110,9 @@ describe('deployments', () => {
     contracts.set('Baz_1', fake())
     const deployments = new Deployments([new DeploymentsPerAddress(testAddress, contracts, new Map(), new Map())])
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(deployments['tryGetDeployedContract']('Foo')).toEqual(contracts.get('Foo')!)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(deployments['tryGetDeployedContract']('Bar')).toEqual(contracts.get('Bar')!)
     expect(deployments['tryGetDeployedContract']('Foo', 1)).toEqual(undefined)
     expect(deployments['tryGetDeployedContract']('Bar', 1)).toEqual(undefined)

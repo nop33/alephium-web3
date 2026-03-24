@@ -16,10 +16,9 @@ You should have received a copy of the GNU Lesser General Public License
 along with the library. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { WebCrypto, TraceableError } from '@alephium/web3'
+import { TraceableError } from '@alephium/web3'
 import * as path from 'path'
-
-const crypto = new WebCrypto()
+import { sha256 } from '@noble/hashes/sha256'
 
 export enum SourceKind {
   Contract = 0,
@@ -35,6 +34,7 @@ class TypedMatcher<T extends SourceKind> {
   type: T
 
   constructor(pattern: string, type: T) {
+    // eslint-disable-next-line security/detect-non-literal-regexp
     this.matcher = new RegExp(pattern, 'mg')
     this.type = type
   }
@@ -99,7 +99,6 @@ export class SourceInfo {
     contractRelativePath: string,
     isExternal: boolean
   ): Promise<SourceInfo> {
-    const { sha256 } = await import('@noble/hashes/sha256')
     const hash = sha256.create()
     hash.update(Buffer.from(sourceCode))
     const sourceCodeHashHex = Buffer.from(hash.digest()).toString('hex')

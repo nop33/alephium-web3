@@ -167,6 +167,7 @@ export class Deployments {
   }
 
   getInstance<I extends ContractInstance>(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     contract: ContractFactory<I, any>,
     group?: number,
     taskId?: string
@@ -218,6 +219,7 @@ export class DeploymentsPerAddress {
     return this.contracts.size === 0 && this.scripts.size === 0 && this.migrations.size === 0
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   marshal(): any {
     return {
       deployerAddress: this.deployerAddress,
@@ -227,6 +229,7 @@ export class DeploymentsPerAddress {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static unmarshal(json: any): DeploymentsPerAddress {
     const deployerAddress = json.deployerAddress as string
     const contracts = new Map(Object.entries<DeployContractExecutionResult>(json.contracts))

@@ -16,7 +16,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with the library. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { web3, NetworkId, networkIds, enableDebugMode, isDebugModeEnabled, CompilerOptions } from '@alephium/web3'
+import { web3, NetworkId, networkIds, enableDebugMode, isDebugModeEnabled } from '@alephium/web3'
 import { program } from 'commander'
 import { run as runJestTests } from 'jest'
 import path from 'path'
@@ -27,7 +27,7 @@ import { checkFullNodeVersion, codegen, getConfigFile, getSdkFullNodeVersion, is
 import { Project } from './src/project'
 import { genInterfaces } from './src/gen-interfaces'
 
-function getConfig(options: any): Configuration {
+function getConfig(options: Record<string, unknown>): Configuration {
   const configFile = options.config ? (options.config as string) : getConfigFile()
   console.log(`Loading alephium config file: ${configFile}`)
   const config = loadConfig(configFile)
@@ -106,6 +106,7 @@ program
     try {
       const config = getConfig(options)
       const networkId = checkAndGetNetworkId(options.network)
+      // eslint-disable-next-line security/detect-object-injection
       const nodeUrl = config.networks[networkId].nodeUrl
       if (!(await isNetworkLive(nodeUrl))) {
         throw new Error(`${networkId} is not live`)
