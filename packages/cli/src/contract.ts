@@ -91,6 +91,7 @@ export class SourceInfo {
     this.isExternal = isExternal
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   static async from(
     type: SourceKind,
     name: string,
