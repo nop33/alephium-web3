@@ -1,8 +1,27 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src/**/*", "scripts/**/*"],
-  "exclude": ["node_modules", "templates", "src/**/*.test.ts", "src/**/fixtures/*"],
+  "include": [
+    "src/**/*",
+    "scripts/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "templates",
+    "src/**/*.test.ts",
+    "src/**/fixtures/*"
+  ],
   "compilerOptions": {
-    "outDir": "dist"
-  },
+    "outDir": "dist",
+    "paths": {
+      "@noble/hashes/*": [
+        "node_modules/@noble/hashes/*",
+        "../../node_modules/@noble/hashes/*"
+      ],
+      "@noble/ciphers/*": [
+        "node_modules/@noble/ciphers/*",
+        "../../node_modules/@noble/ciphers/*"
+      ]
+    },
+    "baseUrl": "."
+  }
 }

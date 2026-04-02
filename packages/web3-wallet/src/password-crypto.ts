@@ -16,35 +16,35 @@ You should have received a copy of the GNU Lesser General Public License
 along with the library. If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { binToHex, concatBytes, hexToBinUnsafe } from '@alephium/web3'
-import {
-  randomBytes,
-  createCipheriv,
-  createDecipheriv,
-  pbkdf2Sync,
-  CipherKey,
-  BinaryLike,
-  DecipherGCM,
-  CipherGCM
-} from 'crypto'
+import { binToHex, hexToBinUnsafe, WebCrypto } from '@alephium/web3'
+import { pbkdf2 } from '@noble/hashes/pbkdf2'
+import { sha256 } from '@noble/hashes/sha256'
+import { gcm } from '@noble/ciphers/aes'
 
 const saltByteLength = 64
-const ivByteLength = 64
+const ivByteLength = 12 // GCM recommended IV size is 96 bits / 12 bytes
 const authTagLength = 16
+
+const webCrypto = new WebCrypto()
 
 export const encrypt = (password: string, dataRaw: string): string => {
   const data = new TextEncoder().encode(dataRaw)
 
-  const salt = randomBytes(saltByteLength)
+  const salt = new Uint8Array(saltByteLength)
+  webCrypto.getRandomValues(salt)
+
   const derivedKey = keyFromPassword(password, salt)
-  const iv = randomBytes(ivByteLength)
-  const cipher = createCipher(derivedKey, iv)
-  const encrypted = concatBytes([cipher.update(data), cipher.final()])
-  const authTag = cipher.getAuthTag()
+
+  const iv = new Uint8Array(ivByteLength)
+  webCrypto.getRandomValues(iv)
+
+  const cipher = gcm(derivedKey, iv)
+  const encryptedWithAuthTag = cipher.encrypt(data)
+
   const payload = {
-    salt: salt.toString('hex'),
-    iv: iv.toString('hex'),
-    encrypted: binToHex(concatBytes([encrypted, authTag])),
+    salt: binToHex(salt),
+    iv: binToHex(iv),
+    encrypted: binToHex(encryptedWithAuthTag),
     version: 1
   }
 
@@ -61,26 +61,16 @@ export const decrypt = (password: string, payloadRaw: string): string => {
 
   const salt = hexToBinUnsafe(payload.salt)
   const iv = hexToBinUnsafe(payload.iv)
-  const encrypted = hexToBinUnsafe(payload.encrypted)
+  const encryptedWithAuthTag = hexToBinUnsafe(payload.encrypted)
 
   const derivedKey = keyFromPassword(password, salt)
-  const decipher = createDecipher(derivedKey, iv)
-  const data = encrypted.slice(0, encrypted.length - authTagLength)
-  const authTag = encrypted.slice(encrypted.length - authTagLength, encrypted.length)
-  decipher.setAuthTag(authTag)
-  const decrypted = concatBytes([decipher.update(data), decipher.final()])
+  const cipher = gcm(derivedKey, iv)
+
+  const decrypted = cipher.decrypt(encryptedWithAuthTag)
 
   return new TextDecoder().decode(decrypted)
 }
 
-const createCipher = (key: CipherKey, iv: BinaryLike): CipherGCM => {
-  return createCipheriv('aes-256-gcm', key, iv)
-}
-
-const createDecipher = (key: CipherKey, iv: BinaryLike): DecipherGCM => {
-  return createDecipheriv('aes-256-gcm', key, iv)
-}
-
-const keyFromPassword = (password: BinaryLike, salt: BinaryLike) => {
-  return pbkdf2Sync(password, salt, 10000, 32, 'sha256')
+const keyFromPassword = (password: string, salt: Uint8Array): Uint8Array => {
+  return pbkdf2(sha256, password, salt, { c: 10000, dkLen: 32 })
 }

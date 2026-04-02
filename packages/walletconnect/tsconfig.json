@@ -12,7 +12,11 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "lib": ["esnext", "dom", "esnext.asynciterable"],
+    "lib": [
+      "esnext",
+      "dom",
+      "esnext.asynciterable"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
@@ -33,7 +37,20 @@
     "strictPropertyInitialization": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "es2020",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "paths": {
+      "@noble/hashes/*": [
+        "node_modules/@noble/hashes/*",
+        "../../node_modules/@noble/hashes/*"
+      ],
+      "@noble/ciphers/*": [
+        "node_modules/@noble/ciphers/*",
+        "../../node_modules/@noble/ciphers/*"
+      ]
+    },
+    "baseUrl": "."
   },
-  "include": ["./src/**/*.ts"]
+  "include": [
+    "./src/**/*.ts"
+  ]
 }
